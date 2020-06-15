@@ -3,6 +3,7 @@ package org.jetbrains.dokka.gradle
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
+import org.gradle.api.attributes.Usage
 import org.gradle.util.GradleVersion
 import java.io.File
 import java.io.InputStream
@@ -21,6 +22,7 @@ open class DokkaPlugin : Plugin<Project> {
         val dokkaRuntimeConfiguration = addConfiguration(project)
         val pluginsConfiguration = project.configurations.create("dokkaPlugins").apply {
             dependencies.add(project.dependencies.create("org.jetbrains.dokka:dokka-base:${DokkaVersion.version}"))
+            attributes.attribute(Usage.USAGE_ATTRIBUTE, project.objects.named(Usage::class.java, "java-runtime"))
         }
         addDokkaTasks(project, dokkaRuntimeConfiguration, pluginsConfiguration, DokkaTask::class.java)
         addDokkaCollectorTasks(project, DokkaCollectorTask::class.java)

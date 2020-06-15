@@ -10,10 +10,7 @@ import org.jetbrains.dokka.pages.RootPageNode
 import org.jetbrains.dokka.plugability.DokkaContext
 import org.jetbrains.dokka.plugability.DokkaPlugin
 import org.jetbrains.dokka.utilities.DokkaLogger
-import org.jetbrains.kotlin.cli.common.messages.CompilerMessageLocation
-import org.jetbrains.kotlin.cli.common.messages.CompilerMessageSeverity
-import org.jetbrains.kotlin.cli.common.messages.MessageCollector
-import org.jetbrains.kotlin.cli.common.messages.MessageRenderer
+import org.jetbrains.kotlin.cli.common.messages.*
 import org.jetbrains.kotlin.cli.jvm.compiler.KotlinCoreEnvironment
 import org.jetbrains.kotlin.utils.PathUtil
 import java.io.File
@@ -171,7 +168,13 @@ class DokkaGenerator(
             if (severity == CompilerMessageSeverity.ERROR) {
                 seenErrors = true
             }
-            logger.info(MessageRenderer.PLAIN_FULL_PATHS.render(severity, message, location))
+            logger.info(
+                MessageRenderer.PLAIN_FULL_PATHS.render(
+                    severity,
+                    message,
+                    location as? CompilerMessageSourceLocation
+                )
+            )
         }
 
         override fun hasErrors() = seenErrors
