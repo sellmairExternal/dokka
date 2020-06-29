@@ -18,6 +18,6 @@ class KotlinAsJavaPlugin : DokkaPlugin() {
                     dokkaBasePlugin.commentsToContentConverter
                 ), ctx.logger
             )
-        }
+        } applyIf { format != "javadoc" }
     }
 }

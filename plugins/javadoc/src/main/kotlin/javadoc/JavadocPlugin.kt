@@ -3,8 +3,11 @@ package org.jetbrains.dokka.javadoc
 import javadoc.JavadocDocumentableToPageTranslator
 import javadoc.location.JavadocLocationProviderFactory
 import javadoc.renderer.KorteJavadocRenderer
+import javadoc.signatures.JavadocSignatureProvider
 import org.jetbrains.dokka.CoreExtensions
 import org.jetbrains.dokka.base.DokkaBase
+import org.jetbrains.dokka.base.resolvers.external.JavadocExternalLocationProviderFactory
+import org.jetbrains.dokka.kotlinAsJava.signatures.JavaSignatureProvider
 import org.jetbrains.dokka.plugability.DokkaPlugin
 import org.jetbrains.dokka.plugability.querySingle
 
@@ -31,13 +34,24 @@ class JavadocPlugin : DokkaPlugin() {
                 dokkaBasePlugin.querySingle { signatureProvider },
                 context.logger
             )
-        }
+        } applyIf { format == "javadoc" }
     }
 
     val javadocLocationProviderFactory by extending {
         locationProviderFactory providing { context ->
             JavadocLocationProviderFactory(context)
-        }
+        } applyIf { format == "javadoc" }
+    }
+
+    val javadocSignatureProvider by extending {
+        val dokkaBasePlugin = plugin<DokkaBase>()
+        dokkaBasePlugin.signatureProvider providing { ctx ->
+            JavadocSignatureProvider(
+                ctx.single(
+                    dokkaBasePlugin.commentsToContentConverter
+                ), ctx.logger
+            )
+        } applyIf { format == "javadoc" }
     }
 }
 
