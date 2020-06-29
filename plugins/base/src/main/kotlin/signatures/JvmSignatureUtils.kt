@@ -1,12 +1,13 @@
 package org.jetbrains.dokka.base.signatures
 
-import org.jetbrains.dokka.DokkaConfiguration
+import org.jetbrains.dokka.DokkaConfiguration.DokkaSourceSet
 import org.jetbrains.dokka.base.translators.documentables.PageContentBuilder
 import org.jetbrains.dokka.links.DRI
 import org.jetbrains.dokka.model.*
 import org.jetbrains.dokka.model.properties.WithExtraProperties
-import org.jetbrains.dokka.pages.*
-import org.jetbrains.dokka.DokkaConfiguration.DokkaSourceSet
+import org.jetbrains.dokka.pages.ContentKind
+import org.jetbrains.dokka.pages.Style
+import org.jetbrains.dokka.pages.TextStyle
 
 interface JvmSignatureUtils {
 
@@ -21,9 +22,6 @@ interface JvmSignatureUtils {
 
     fun <T : Documentable> WithExtraProperties<T>.annotations(): SourceSetDependent<List<Annotations.Annotation>> =
         extra[Annotations]?.content ?: emptyMap()
-
-    private fun Annotations.Annotation.toSignatureString(): String =
-        "@" + this.dri.classNames + "(" + this.params.entries.joinToString { it.key + "=" + it.value } + ")"
 
     private fun PageContentBuilder.DocumentableContentBuilder.annotations(
         d: Documentable,
