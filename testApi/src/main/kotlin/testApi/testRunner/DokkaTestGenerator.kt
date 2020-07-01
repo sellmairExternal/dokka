@@ -1,7 +1,6 @@
 package org.jetbrains.dokka.testApi.testRunner
 
 import org.jetbrains.dokka.DokkaConfiguration
-import org.jetbrains.dokka.DokkaConfiguration.DokkaSourceSet
 import org.jetbrains.dokka.DokkaGenerator
 import org.jetbrains.dokka.plugability.DokkaPlugin
 import org.jetbrains.dokka.utilities.DokkaLogger
@@ -10,14 +9,14 @@ internal class DokkaTestGenerator(
     private val configuration: DokkaConfiguration,
     private val logger: DokkaLogger,
     private val testMethods: TestMethods,
-    private val pluginOverrides: List<DokkaPlugin> = emptyList()
+    private val additionalPlugins: List<DokkaPlugin> = emptyList()
 ) {
 
     fun generate() = with(testMethods) {
         val dokkaGenerator = DokkaGenerator(configuration, logger)
 
         val context =
-            dokkaGenerator.initializePlugins(configuration, logger, pluginOverrides)
+            dokkaGenerator.initializePlugins(configuration, logger, additionalPlugins)
         pluginsSetupStage(context)
 
         val modulesFromPlatforms = dokkaGenerator.createDocumentationModels(context)
