@@ -51,6 +51,6 @@ internal class JavadocContentToHtmlTranslator(
             """<a href=${address.formatToEndWithHtml()}>$content</a>"""
 
         private fun String.formatToEndWithHtml() =
-            if (endsWith(".html")) this else "$this.html"
+            if (endsWith(".html") || contains(Regex("\\.html#"))) this else "$this.html"
     }
 }
