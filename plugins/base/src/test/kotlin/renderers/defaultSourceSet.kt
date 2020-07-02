@@ -1,9 +1,9 @@
-package renderers.html
+package renderers
 
 import org.jetbrains.dokka.DokkaSourceSetImpl
 import org.jetbrains.dokka.Platform
 
-internal val defaultSourceSet = DokkaSourceSetImpl(
+val defaultSourceSet = DokkaSourceSetImpl(
     moduleName = "DEFAULT",
     displayName = "DEFAULT",
     sourceSetID = "DEFAULT",
