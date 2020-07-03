@@ -5,10 +5,10 @@ import org.jetbrains.dokka.SourceRootImpl
 import org.jetbrains.dokka.base.renderers.html.HtmlRenderer
 import org.jetbrains.dokka.pages.TextStyle
 import org.junit.jupiter.api.Test
-import renderers.Div
 import renderers.RenderingOnlyTestBase
 import renderers.TestPage
-import renderers.match
+import utils.Div
+import utils.match
 
 class SourceSetDependentHintTest : RenderingOnlyTestBase() {
 
