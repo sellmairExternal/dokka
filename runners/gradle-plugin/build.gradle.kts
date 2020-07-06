@@ -54,7 +54,6 @@ publishing {
     }
 }
 
-configureBintrayPublication("dokkaGradlePlugin")
 
 gradlePlugin {
     plugins {
@@ -82,3 +81,5 @@ pluginBundle {
         artifactId = "dokka-gradle-plugin"
     }
 }
+
+configureBintrayPublication("dokkaGradlePlugin", "dokkaGradlePluginPluginMarkerMaven")
