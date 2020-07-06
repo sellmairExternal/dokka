@@ -14,6 +14,7 @@ import org.jetbrains.dokka.plugability.querySingle
 class JavadocPlugin : DokkaPlugin() {
 
     val dokkaBasePlugin by lazy { plugin<DokkaBase>() }
+    val javadocFormat = "javadoc"
 
     val locationProviderFactory by extensionPoint<JavadocLocationProviderFactory>()
 
@@ -24,7 +25,7 @@ class JavadocPlugin : DokkaPlugin() {
                 ctx,
                 "views"
             )
-        } applyIf { format == "javadoc" }
+        } applyIf { format == javadocFormat }
     }
 
     val pageTranslator by extending {
@@ -34,13 +35,13 @@ class JavadocPlugin : DokkaPlugin() {
                 dokkaBasePlugin.querySingle { signatureProvider },
                 context.logger
             )
-        } applyIf { format == "javadoc" }
+        } applyIf { format == javadocFormat }
     }
 
     val javadocLocationProviderFactory by extending {
         locationProviderFactory providing { context ->
             JavadocLocationProviderFactory(context)
-        } applyIf { format == "javadoc" }
+        } applyIf { format == javadocFormat }
     }
 
     val javadocSignatureProvider by extending {
@@ -51,7 +52,7 @@ class JavadocPlugin : DokkaPlugin() {
                     dokkaBasePlugin.commentsToContentConverter
                 ), ctx.logger
             )
-        } applyIf { format == "javadoc" }
+        } applyIf { format == javadocFormat }
     }
 }
 
